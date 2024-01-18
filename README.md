@@ -39,7 +39,7 @@ python manage.py runserver
 ```
 
 It should start the server in localhost:8000.
-# The url to run your website is localhost:8000/get_repos
+## The url to run your website is localhost:8000/get_repos
 
 ## Additional Notes
 
