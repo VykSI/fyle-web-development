@@ -7,7 +7,7 @@ Fyle Web Development is a GitHub repository viewer designed to interact with Git
 ### Clone the Repository
 
 ```bash
-git clone https://github.com/VykSI/fyle-web-development.git)https://github.com/VykSI/fyle-web-development.git
+git clone https://github.com/VykSI/fyle-web-development.git
 cd fyle-web-development
 ```
 
