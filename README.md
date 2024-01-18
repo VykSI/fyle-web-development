@@ -30,7 +30,12 @@ source env/bin/activate
 pip install -r requirements.txt
 ```
 
-Add your GitHub API to run the code in views.py (GITHUB_ACCESS_TOKEN).
+## Add your GitHub API to run the code
+
+```
+Settings > developer settings > personal access tokens > fine grained token > generate token
+```
+Copy the token and paste it in views.py (GITHUB_ACCESS_TOKEN).
 
 ### Run the Server
 
