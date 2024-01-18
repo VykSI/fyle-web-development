@@ -1,18 +1,6 @@
 # fyle-web-development
 
-Brief description of your project.
-
-## Table of Contents
-
-- [Getting Started](#getting-started)
-  - [Clone the Repository](#clone-the-repository)
-  - [Create and Activate Virtual Environment](#create-and-activate-virtual-environment)
-    - [Windows](#windows)
-    - [Linux](#linux)
-  - [Install Dependencies](#install-dependencies)
-  - [Add GitHub API in `views.py`](#add-github-api-in-views.py)
-  - [Run the Server](#run-the-server)
-- [Additional Notes](#additional-notes)
+Fyle Web Development is a GitHub repository viewer designed to interact with GitHub APIs. This web application allows users to view specific user repositories and details on GitHub. Users can clone repositories, create and activate virtual environments, install dependencies, and run the server to explore GitHub repositories conveniently. The project emphasizes ease of use and customization, enabling users to tailor their GitHub repository viewing experience.
 
 ## Getting Started
 
@@ -36,21 +24,21 @@ virtualenv env
 source env/bin/activate
 ```
 
-###Install Dependencies
+### Install Dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-##Add your GitHub API to run the code.
+## Add your GitHub API to run the code.
 
-###Run the Server
+### Run the Server
 
 ```bash
 python manage.py runserver
 ```
 
-##Additional Notes
+## Additional Notes
 
 1. Make sure to activate the virtual environment before running the server.
 2. Customize the GitHub API integration in views.py as needed for your project.
