@@ -30,7 +30,7 @@ source env/bin/activate
 pip install -r requirements.txt
 ```
 
-## Add your GitHub API to run the code in views.py (GITHUB_ACCESS_TOKEN).
+Add your GitHub API to run the code in views.py (GITHUB_ACCESS_TOKEN).
 
 ### Run the Server
 
