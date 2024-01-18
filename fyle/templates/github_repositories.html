@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Repositories</title>
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap");
+
+        body {
+            background: #040404;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-family: "Poppins", sans-serif;
+            color: #fff;
+
+        }
+
+        #userDetails {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        #userLogo {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 40px;
+        }
+
+        #userLogo img {
+            width: 100%;
+            height: auto;
+        }
+
+        #userInfo {
+            display: flex;
+            flex-direction: column;
+        }
+
+        #userLink {
+            color: #3498db;
+            font-size: 18px;
+            text-decoration: none;
+        }
+
+        #pagination {
+            display: flex;
+            list-style: none;
+            padding: 0;
+        }
+
+        #pagination li {
+            margin-right: 5px;
+        }
+
+        #pagination a {
+            text-decoration: none;
+            color: blue;
+            border: 1px solid #ccc;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+
+        #pagination {
+            display: flex;
+            justify-content: space-between;
+            /* Add this line */
+        }
+
+        html {
+            height: 100%;
+        }
+
+
+        #example {
+            width: 100%;
+            max-width: 800px;
+            margin: auto;
+            margin-top: 30px;
+            color: #393535;
+            overflow-y: auto;
+            /* Enable vertical scrollbar when content overflows */
+            max-height: 400px;
+            /* Set the maximum height of the container */
+            box-shadow: 0 0 50px rgba(255, 255, 255, 0.5);
+        }
+
+        ul.list {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        ul.list li {
+            display: flex;
+            padding: 15px;
+            flex-direction: column;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.05);
+            margin-bottom: 10px;
+            background-color: #fff;
+            border-left: 4px solid #fff;
+            transition: all 0.3s ease;
+            position: relative;
+            cursor: pointer;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        ul.list li .title {
+            font-weight: bold;
+            font-size: 18px;
+            position: relative;
+            z-index: 1;
+            line-height: 24px;
+        }
+
+        ul.list li .subtitle {
+            position: relative;
+            z-index: 1;
+            font-size: 14px;
+            opacity: 0.7;
+        }
+
+        ul.list li:after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 100%;
+            transition: width 0.3s ease;
+        }
+
+        ul.list li:hover {
+            color: #fff;
+        }
+
+        ul.list li:hover:after {
+            width: 100%;
+            transition: width 0.3s ease;
+        }
+
+        /* Shopping */
+        ul.list li.shopping:after {
+            background: linear-gradient(102deg, #cc00c5 0%, #1061b7 100%);
+        }
+
+        ul.list li.shopping {
+            border-left-color: #cc00c5;
+        }
+
+        /* Personal */
+        ul.list li.personal:after {
+            background: linear-gradient(102deg, #00cc88 0%, #1096b7 100%);
+        }
+
+        ul.list li.personal {
+            border-left-color: #00cc88;
+        }
+
+        /* Work */
+        ul.list li.work:after {
+            background: linear-gradient(102deg, #fa5437 0%, #ed4618 100%);
+        }
+
+        ul.list li.work {
+            border-left-color: #fa5437;
+        }
+
+
+
+
+
+        #githubForm {
+            display: flex;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+
+
+        input {
+            height: 30px;
+            width: 50%;
+            border: 1px #18e079 solid;
+        }
+
+        i {
+            color: #fff;
+        }
+
+        button {
+            background-color: #18e079;
+            height: 30px;
+            width: 130px;
+            border: 1px transparent solid;
+        }
+
+        button:hover {
+            background-color: #00ffbe;
+
+        }
+
+        #search-box {
+            box-sizing: border-box;
+            display: flex;
+            margin-left: 35%;
+        }
+
+        #perPage {
+            margin-right: 10px;
+            height: 30px;
+            border: none;
+            background: linear-gradient(135deg, #2c3e50, #1f2c39);
+            /* Darker gradient */
+            color: #fff;
+            padding: 0 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #perPage:focus {
+            outline: none;
+            box-shadow: 0 0 5px rgba(44, 62, 80, 0.8);
+            /* Darker box-shadow on focus */
+        }
+
+        #perPage option {
+            background-color: #34495e;
+            /* Darker background color for options */
+            color: #ecf0f1;
+            /* Lighter text color for options */
+        }
+
+
+        .boxes {
+            height: 32px;
+            width: 32px;
+            display: none;
+            position: relative;
+            -webkit-transform-style: preserve-3d;
+            transform-style: preserve-3d;
+            -webkit-transform-origin: 50% 50%;
+            transform-origin: 50% 50%;
+            margin-top: 32px;
+            -webkit-transform: rotateX(60deg) rotateZ(45deg) rotateY(0deg) translateZ(0px);
+            transform: rotateX(60deg) rotateZ(45deg) rotateY(0deg) translateZ(0px);
+        }
+
+        .boxes .box {
+            width: 32px;
+            height: 32px;
+            top: 0px;
+            left: 0;
+            position: absolute;
+            -webkit-transform-style: preserve-3d;
+            transform-style: preserve-3d;
+        }
+
+
+
+        .boxes .box:nth-child(1) {
+            -webkit-transform: translate(100%, 0);
+            transform: translate(100%, 0);
+            -webkit-animation: box1 1s linear infinite;
+            animation: box1 1s linear infinite;
+        }
+
+        .boxes .box:nth-child(2) {
+            -webkit-transform: translate(0, 100%);
+            transform: translate(0, 100%);
+            -webkit-animation: box2 1s linear infinite;
+            animation: box2 1s linear infinite;
+        }
+
+        .boxes .box:nth-child(3) {
+            -webkit-transform: translate(100%, 100%);
+            transform: translate(100%, 100%);
+            -webkit-animation: box3 1s linear infinite;
+            animation: box3 1s linear infinite;
+        }
+
+        .boxes .box:nth-child(4) {
+            -webkit-transform: translate(200%, 0);
+            transform: translate(200%, 0);
+            -webkit-animation: box4 1s linear infinite;
+            animation: box4 1s linear infinite;
+        }
+
+
+
+        .boxes .box>div {
+            background: #5C8DF6;
+            --translateZ: 15.5px;
+            --rotateY: 0deg;
+            --rotateX: 0deg;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: #5C8DF6;
+            top: auto;
+            right: auto;
+            bottom: auto;
+            left: auto;
+            -webkit-transform: rotateY(var(--rotateY)) rotateX(var(--rotateX)) translateZ(var(--translateZ));
+            transform: rotateY(var(--rotateY)) rotateX(var(--rotateX)) translateZ(var(--translateZ));
+        }
+
+        .boxes .box>div:nth-child(1) {
+            top: 0;
+            left: 0;
+            background: #5C8DF6;
+        }
+
+        .boxes .box>div:nth-child(2) {
+            background: #145af2;
+            right: 0;
+            --rotateY: 90deg;
+        }
+
+        .boxes .box>div:nth-child(3) {
+            background: #447cf5;
+            --rotateX: -90deg;
+        }
+
+        .boxes .box>div:nth-child(4) {
+            background: #DBE3F4;
+            top: 0;
+            left: 0;
+            --translateZ: -90px;
+        }
+
+
+
+
+
+        @keyframes box1 {
+
+            0%,
+            50% {
+                transform: translate(100%, 0);
+            }
+
+            100% {
+                transform: translate(200%, 0);
+            }
+        }
+
+        @keyframes box2 {
+            0% {
+                transform: translate(0, 100%);
+            }
+
+            50% {
+                transform: translate(0, 0);
+            }
+
+            100% {
+                transform: translate(100%, 0);
+            }
+        }
+
+        @keyframes box3 {
+
+            0%,
+            50% {
+                transform: translate(100%, 100%);
+            }
+
+            100% {
+                transform: translate(0, 100%);
+            }
+        }
+
+        @keyframes box4 {
+            0% {
+                transform: translate(200%, 0);
+            }
+
+            50% {
+                transform: translate(200%, 100%);
+            }
+
+            100% {
+                transform: translate(100%, 100%);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <h1>GitHub Repositories</h1>
+
+    <div id="userDetails" style="display: flex; align-items: center; margin-top: 5px;">
+        <div id="userLogo" style="margin-right: 20px;">
+            <img id="image" alt="User Logo">
+        </div>
+        <div id="userInfo" style="display: flex; flex-direction: column;">
+            <p id="username"></p>
+            <p id="location"></p>
+            <a id="userLink" target="_blank"></a>
+        </div>
+    </div>
+
+    <form id="githubForm" style="display: flex; align-items: center; margin-top: 20px;">
+        {% csrf_token %}
+        <div class="search-box">
+            <input type="search" placeholder="Username" id="search-inp">
+            </input>
+            <button type="button" onclick="getit()">Get Repositories</button>
+
+
+
+        </div>
+        <label for="perPage">Repositories per page:<select id="perPage" name="perPage">
+                <option value="10" selected>10</option>
+                <option value="20">20</option>
+                <option value="30">30</option>
+                <option value="40">40</option>
+                <option value="50">50</option>
+                <option value="60">60</option>
+                <option value="70">70</option>
+                <option value="80">80</option>
+                <option value="90">90</option>
+                <option value="100">100</option>
+            </select></label>
+    </form>
+    <div class="search-box" style="margin-top: 20px;">
+        <input type="search" placeholder="Search Repositories" id="repo-search-inp" oninput="searchRepositories()">
+        <button type="button" onclick="clearSearch()">Clear</button>
+    </div>
+    <div class="boxes">
+        <div class="box">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <div class="box">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <div class="box">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <div class="box">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+    <div id="error"></div>
+    <div id="example">
+
+        <ul class="list" id="repositories">
+
+        </ul>
+    </div>
+
+
+    <div id="app" class="pagination-container">
+        <ul class="page">
+
+        </ul>
+        <!-- Page numbers will be added dynamically here -->
+    </div>
+
+
+    <script>
+
+        let currentPage = 1;
+        let nop = 1;
+
+        async function getit() {
+            currentPage = 1;
+            getRepositories();
+        }
+        async function getRepositories() {
+            const username = document.getElementById('search-inp').value;
+            const page = document.getElementById('perPage').value;
+            const apiUrl = '/get_repos/';
+            const repositoriesList = document.getElementById('repositories');
+            repositoriesList.innerHTML = '';
+
+            const paginationContainer = document.querySelector('.pagination-container');
+            paginationContainer.innerHTML = '';
+            const loading = document.querySelectorAll('.boxes');
+            loading.forEach(element => {
+                element.style.display = 'block';
+            });
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': document.getElementsByName('csrfmiddlewaretoken')[0].value,
+                    },
+                    body: JSON.stringify({ 'username': username, 'end': (currentPage * parseInt(page)), 'start': (currentPage - 1) * parseInt(page) }),
+                });
+
+                const data = await response.json();
+                console.log(data);
+                nop = data.number_of_pages;
+                const imageElement = document.getElementById('image');
+                imageElement.src = data.logo;
+                const username1 = document.getElementById('username');
+                username1.textContent = username;
+                const locationElement = document.getElementById('location');
+                const userLinkElement = document.getElementById('userLink');
+
+                locationElement.textContent = `Location: ${data.location}`;
+                userLinkElement.href = data.url;
+                userLinkElement.textContent = data.url;
+
+                if (response.ok) {
+                    const er = document.getElementById('error');
+                    er.innerHTML = '';
+                    displayRepositories(data.repositories, data.languages, data.stars, data.forks);
+
+                } else {
+                    const loading = document.querySelectorAll('.boxes');
+                    loading.forEach(element => {
+                        element.style.display = 'none';
+                    });
+                    const er = document.getElementById('error');
+                    er.innerHTML = 'user not found';
+                    console.error(data.error || `Failed to fetch repositories. Status code: ${response.status}`);
+                }
+            } catch (error) {
+                const loading = document.querySelectorAll('.boxes');
+                loading.forEach(element => {
+                    element.style.display = 'none';
+                });
+                const er = document.getElementById('error');
+                er.innerHTML = 'user not found';
+                console.error(`An error occurred: ${error.message}`);
+            }
+        }
+
+        function displayRepositories(repositories, languages, stars, forks) {
+            const repositoriesList = document.getElementById('repositories');
+            const username = document.getElementById('search-inp').value;
+
+            repositoriesList.innerHTML = ''; // Clear previous results
+            const loading = document.querySelectorAll('.boxes');
+            loading.forEach(element => {
+                element.style.display = 'none';
+            });
+            repositories.forEach((repo, index) => {
+                const listItem = document.createElement('li');
+                const classIndex = index % 3;
+
+                // Assign class based on the remainder of the index divided by 3
+                if (classIndex === 0) {
+                    listItem.className = 'shopping';
+                } else if (classIndex === 1) {
+                    listItem.className = 'personal';
+                } else {
+                    listItem.className = 'work';
+                }
+
+                const titleSpan = document.createElement('span');
+                titleSpan.className = 'title';
+                titleSpan.textContent = repo.name;
+
+                const subtitleSpan = document.createElement('span');
+                subtitleSpan.className = 'subtitle';
+                subtitleSpan.textContent = `Languages: ${Object.keys(languages[repo.name]).join(', ')}`;
+
+                listItem.appendChild(titleSpan);
+                listItem.appendChild(subtitleSpan);
+
+                listItem.addEventListener('click', () => {
+                    window.open(`http://github.com/${username}/${repo.name}`, '_blank');
+                });
+
+                repositoriesList.appendChild(listItem);
+
+            });
+            displayPaginationButtons();
+
+        }
+
+        async function searchRepositories() {
+            const repoSearchValue = document.getElementById('repo-search-inp').value;
+            const username = document.getElementById('search-inp').value;
+
+            const apiUrl = '/search_repos/';
+            const page = document.getElementById('perPage').value;
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': document.getElementsByName('csrfmiddlewaretoken')[0].value,
+                    },
+                    body: JSON.stringify({ 'repoSearchValue': repoSearchValue, 'username': username, 'nop': page }),
+                });
+
+                const data = await response.json();
+                console.log(data);
+                nop = data.number_of_pages;
+
+                if (response.ok) {
+                    displayRepositories(data.repositories, data.languages, data.stars, data.forks);
+                } else {
+                    console.error(data.error || `Failed to fetch repositories. Status code: ${response.status}`);
+                }
+            } catch (error) {
+                console.error(`An error occurred: ${error.message}`);
+            }
+        }
+
+        // Add the new function to clear search results
+        function clearSearch() {
+            // Clear the search input
+            document.getElementById('repo-search-inp').value = '';
+
+            // Fetch the repositories based on the original search
+            getRepositories();
+        }
+        function displayPaginationButtons() {
+            const paginationContainer = document.querySelector('.pagination-container');
+            paginationContainer.innerHTML = ''; // Clear previous pagination
+            paginationContainer.style.justifyContent = 'center';
+            for (let i = 1; i <= nop; i++) {
+                const pageButton = document.createElement('button');
+                pageButton.style.width = '30px';
+                pageButton.textContent = i;
+                pageButton.style.marginRight = '5px';
+                pageButton.addEventListener('click', () => {
+                    currentPage = i;
+                    getRepositories(); // Fetch repositories for the selected page
+                });
+
+                if (i === currentPage) {
+                    pageButton.classList.add('active'); // Highlight the current page
+                }
+
+                paginationContainer.appendChild(pageButton);
+            }
+        }
+    </script>
