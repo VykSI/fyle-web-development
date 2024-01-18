@@ -6,7 +6,6 @@ Brief description of your project.
 
 - [Getting Started](#getting-started)
   - [Clone the Repository](#clone-the-repository)
-  - [Navigate to the Project Directory](#navigate-to-the-project-directory)
   - [Create and Activate Virtual Environment](#create-and-activate-virtual-environment)
     - [Windows](#windows)
     - [Linux](#linux)
@@ -20,4 +19,40 @@ Brief description of your project.
 ### Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/your-project.git
+git clone https://github.com/VykSI/fyle-web-development.git)https://github.com/VykSI/fyle-web-development.git
+cd fyle-web-development
+```
+
+### Create and Activate Virtual Environment
+
+```bash
+windows:
+python -m venv env
+env\Scripts\activate
+
+linux:
+pip install virtualenv
+virtualenv env
+source env/bin/activate
+```
+
+###Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+##Add your GitHub API to run the code.
+
+###Run the Server
+
+```bash
+python manage.py runserver
+```
+
+##Additional Notes
+
+1. Make sure to activate the virtual environment before running the server.
+2. Customize the GitHub API integration in views.py as needed for your project.
+3. Ensure that you have the necessary dependencies installed from requirements.txt.
+
