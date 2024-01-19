@@ -513,7 +513,7 @@
                 });
 
                 const data = await response.json();
-                console.log(data);
+            
                 nop = data.number_of_pages;
                 const imageElement = document.getElementById('image');
                 imageElement.src = data.logo;
@@ -613,7 +613,7 @@
                 });
 
                 const data = await response.json();
-                console.log(data);
+               
                 nop = data.number_of_pages;
 
                 if (response.ok) {
